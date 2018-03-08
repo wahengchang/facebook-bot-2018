@@ -20,3 +20,12 @@ yarn-error.log*
 
 # keys
 env.sh
+
+# google
+speech*.json
+
+# audio
+*.mp3
+*.raw
+*.aac
+*.m4a

@@ -3,25 +3,26 @@
 const express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()), // creates express http server
+  controller = require('./controller'),
   port = process.env.PORT || 1337
 
+require('./model/init')
 app.use(express.static('public'))
 
 app.post('/webhook', (req, res) => {
+  console.log('-=-=-=-= POST webhook -=-=-=-=')
   let body = req.body
 
   if (body.object !== 'page') return res.sendStatus(404)
 
-  body.entry.forEach(function (entry) {
-    let webhook_event = entry.messaging[0]
-    console.log(JSON.stringify(webhook_event, null, 2))
-  })
+  return (new controller(req, res)).validate()
 
-  res.status(200).send('EVENT_RECEIVED')
+  res.status(200).send('EVENT_RECEIVED');
 })
 
 app.get('/webhook', (req, res) => {
-  let VERIFY_TOKEN = process.env.APP_TOKEN
+  console.log('-=-=-=-= GET webhook -=-=-=-=')
+  let VERIFY_TOKEN = process.env.VERIFY_TOKEN
 
   // Parse the query params
   let mode = req.query['hub.mode']
