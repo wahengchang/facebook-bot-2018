@@ -5,6 +5,8 @@ const express = require('express'),
   app = express().use(bodyParser.json()), // creates express http server
   port = process.env.PORT || 1337
 
+app.use(express.static('public'))
+
 app.post('/webhook', (req, res) => {
   let body = req.body
 
