@@ -14,7 +14,7 @@ app.post('/webhook', (req, res) => {
 
   body.entry.forEach(function (entry) {
     let webhook_event = entry.messaging[0]
-    console.log(webhook_event)
+    console.log(JSON.stringify(webhook_event, null, 2))
   })
 
   res.status(200).send('EVENT_RECEIVED')
