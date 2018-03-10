@@ -1,4 +1,5 @@
 const {matchSpend,extractNumber,extractCategory}  = require('./lib/parser')
+const {sendTextMessage}  = require('./lib/bot')
 const cost = require('./model/cost')
 
 const controller = function (req, res) {
@@ -24,23 +25,21 @@ const btpParser = (entry) => {
     return {cost, category, userId}
 }
 
-controller.prototype.validate = function () {
+controller.prototype.validate = async function () {
+    console.log('1 -=-=-=-=-=-=-=-= validate -=-=-=-=-=-=-=-=')
     console.log(JSON.stringify(this.req.body, null, 2))
-
-    return this.req.body.entry.forEach(function (entry) {
+    
+    for (let entry of this.req.body.entry) {
         const costObj = btpParser(entry)
         if(costObj){
-            return cost.create(costObj)
-                .then(()=> {
-                    console.log('$', costObj.cost, ' costObj: is created')
-                    return this.res.status(200).send('EVENT_RECEIVED')
-                }, (err)=>{
-                    console.log('err: ', err)
-                    return this.res.status(500).send('CREATE_DB_ERROR')
-                })
-            }
-    })
+            await cost.create(costObj)
+            const msg = '$'+ costObj.cost+ ' costObj: is recorded'
+            await sendTextMessage(costObj.userId, msg)
+            return this.res.status(200).send('EVENT_RECEIVED')
+        }
+    }
     
+    return this.res.status(200).send('EVENT_DONE')
 }
 
 module.exports = controller

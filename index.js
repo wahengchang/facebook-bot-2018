@@ -9,15 +9,13 @@ const express = require('express'),
 require('./model/init')
 app.use(express.static('public'))
 
-app.post('/webhook', (req, res) => {
+app.post('/webhook', async (req, res) => {
   console.log('-=-=-=-= POST webhook -=-=-=-=')
   let body = req.body
 
   if (body.object !== 'page') return res.sendStatus(404)
 
-  return (new controller(req, res)).validate()
-
-  res.status(200).send('EVENT_RECEIVED');
+  return await (new controller(req, res)).validate()
 })
 
 app.get('/webhook', (req, res) => {
