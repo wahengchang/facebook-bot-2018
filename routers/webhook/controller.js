@@ -12,6 +12,7 @@ const controller = function (req, res) {
 const btpParser = (entry) => {
     const str = entry.messaging && entry.messaging[0] && entry.messaging[0].message && entry.messaging[0].message.text
     const userId = entry.messaging && entry.messaging[0] && entry.messaging[0].sender && entry.messaging[0].sender.id
+    const recipientId = entry.messaging && entry.messaging[0] && entry.messaging[0].recipient && entry.messaging[0].recipient.id
 
     let cost, category
 
@@ -22,7 +23,7 @@ const btpParser = (entry) => {
 
     category = extractCategory(str)
 
-    return {cost, category, userId}
+    return {cost, category, userId, recipientId}
 }
 
 controller.prototype.validate = async function () {
@@ -37,7 +38,11 @@ controller.prototype.validate = async function () {
             await sendTextMessage(costObj.userId, msg)
             return this.res.status(200).send('EVENT_RECEIVED')
         } else {
-            await sendLoginButton(costObj.userId)
+            console.log('2 -=-=-=-=-= validate -=-=-=-=-=')
+            console.log('costObj.userId: ', costObj.userId)
+            sendLoginButton(costObj.userId)
+            sendLoginButton(costObj.recipientId)
+
             return this.res.status(200).send('EVENT_RECEIVED')
         }
     }
