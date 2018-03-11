@@ -7,11 +7,13 @@ const controller = function (req, res) {
   this.res = res
 }
 
+const userIdParser = entry => entry.messaging && entry.messaging[0] && entry.messaging[0].sender && entry.messaging[0].sender.id
+
 // bill tracking processer
 // btp
 const btpParser = (entry) => {
     const str = entry.messaging && entry.messaging[0] && entry.messaging[0].message && entry.messaging[0].message.text
-    const userId = entry.messaging && entry.messaging[0] && entry.messaging[0].sender && entry.messaging[0].sender.id
+    const userId = userIdParser(entry)
     const recipientId = entry.messaging && entry.messaging[0] && entry.messaging[0].recipient && entry.messaging[0].recipient.id
 
     let cost, category
@@ -32,16 +34,19 @@ controller.prototype.validate = async function () {
     
     for (let entry of this.req.body.entry) {
         const costObj = btpParser(entry)
+        const userId = userIdParser(entry)
         if(costObj && costObj.cost){
             await cost.create(costObj)
             const msg = '$'+ costObj.cost+ ' costObj: is recorded'
             await sendTextMessage(costObj.userId, msg)
             return this.res.status(200).send('EVENT_RECEIVED')
-        } else {
+        }
+        
+        if(userId){
             console.log('2 -=-=-=-=-= validate -=-=-=-=-=')
-            console.log('costObj.userId: ', costObj.userId)
-            sendLoginButton(costObj.userId)
-            sendLoginButton(costObj.recipientId)
+            console.log('userId: ', userId)
+            sendLoginButton(userId)
+            // sendLoginButton(costObj.recipientId)
 
             return this.res.status(200).send('EVENT_RECEIVED')
         }
