@@ -1,8 +1,8 @@
 const httpMocks = require('node-mocks-http')
-const mockTextMsg = require('./mock/text-msg.js')
-const controller = require('../controller')
+const mockTextMsg = require('../../mock/text-msg.js')
+const controller = require('../../../routers/webhook/controller')
 
-jest.mock('../model/cost', () => (
+jest.mock('../../../model/cost', () => (
   {
     create: function () {
       return Promise.resolve()

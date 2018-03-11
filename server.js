@@ -16,11 +16,12 @@ app.prepare()
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: false }))
 //   server.use(require('./lib/middleware/renderEngine')(app))
-//   server.use(require('./lib/middleware/normalizer')(app))
+  server.use(require('./lib/middleware/normalizer')(app))
 //   server.use(helmet())
   server.disable('x-powered-by')
 
   // routers config below
+  server.use('/login', require('./routers/login'))
   server.use('/webhook', require('./routers/webhook'))
 
   server.get('*', (req, res) => {

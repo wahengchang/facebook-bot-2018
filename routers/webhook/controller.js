@@ -1,6 +1,6 @@
-const {matchSpend,extractNumber,extractCategory}  = require('./lib/parser')
-const {sendTextMessage}  = require('./lib/bot')
-const cost = require('./model/cost')
+const {matchSpend,extractNumber,extractCategory}  = require('../../lib/parser')
+const {sendTextMessage}  = require('../../lib/bot')
+const cost = require('../../model/cost')
 
 const controller = function (req, res) {
   this.req = req
@@ -31,10 +31,13 @@ controller.prototype.validate = async function () {
     
     for (let entry of this.req.body.entry) {
         const costObj = btpParser(entry)
-        if(costObj){
+        if(costObj && costObj.cost){
             await cost.create(costObj)
             const msg = '$'+ costObj.cost+ ' costObj: is recorded'
             await sendTextMessage(costObj.userId, msg)
+            return this.res.status(200).send('EVENT_RECEIVED')
+        } else {
+            await sendLoginButton(costObj.userId)
             return this.res.status(200).send('EVENT_RECEIVED')
         }
     }
