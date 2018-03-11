@@ -1,5 +1,5 @@
 const {matchSpend,extractNumber,extractCategory}  = require('../../lib/parser')
-const {sendTextMessage}  = require('../../lib/bot')
+const {sendTextMessage, sendLoginButton}  = require('../../lib/bot')
 const cost = require('../../model/cost')
 
 const controller = function (req, res) {
