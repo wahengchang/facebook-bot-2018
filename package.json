@@ -21,7 +21,8 @@
     "next": "^5.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "uglify-es": "^3.3.9"
   },
   "devDependencies": {
     "node-mocks-http": "^1.5.8"
