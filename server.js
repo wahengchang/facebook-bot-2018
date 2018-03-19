@@ -15,7 +15,7 @@ app.prepare()
   // middleware init below
   server.use(bodyParser.json());
   server.use(bodyParser.urlencoded({ extended: false }))
-//   server.use(require('./lib/middleware/renderEngine')(app))
+  server.use(require('./lib/middleware/renderEngine')(app))
   server.use(require('./lib/middleware/normalizer')(app))
 //   server.use(helmet())
   server.disable('x-powered-by')
@@ -23,6 +23,7 @@ app.prepare()
   // routers config below
   server.use('/login', require('./routers/login'))
   server.use('/webhook', require('./routers/webhook'))
+  server.use('/costs', require('./routers/costs'))
 
   server.get('*', (req, res) => {
     return handle(req, res)

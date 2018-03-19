@@ -1,6 +1,6 @@
 const {matchSpend,extractNumber,extractCategory}  = require('../../lib/parser')
 const {sendTextMessage, sendLoginButton}  = require('../../lib/bot')
-const cost = require('../../model/cost')
+const cost = require('../../model/costs')
 
 const controller = function (req, res) {
   this.req = req

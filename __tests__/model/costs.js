@@ -51,6 +51,7 @@ describe('cost object', ()=>{
                 done()
             })
         })
+        
         it('limit = 2', (done)=>{
             cost.list({limit:2}).then((list)=>{
                 expect(list.length).toBe(2)
