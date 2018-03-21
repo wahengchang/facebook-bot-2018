@@ -8,16 +8,6 @@ const create = (payload) => {
     return Cost.save(payload)
 }
 
-/**
- * list
- *
- * @payload {Drupal~behavior}
- * 
- * @prop {Drupal~behaviorAttach} attach
- *   Specific description of this attach function goes here.
- * @prop {Drupal~behaviorDetach} detach
- *   Specific description of this detach function goes here.
- */
 const list = (payload = {}, field={}, exist={}) => {
     const {
         limit = 10,
