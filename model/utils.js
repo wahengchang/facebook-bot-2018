@@ -10,7 +10,7 @@ const removeEmpty =  (obj) => {
 const sortbyParser = (sortStr = '') => {
     if(!sortStr) return
 
-    if(!sortStr.includes('-')) {ascending: sortStr}
+    if(!sortStr.includes('-')) return {ascending: sortStr}
 
     const _split = sortStr.split('-')
 
