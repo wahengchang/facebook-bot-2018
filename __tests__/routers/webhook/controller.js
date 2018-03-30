@@ -2,13 +2,11 @@ const httpMocks = require('node-mocks-http')
 const mockTextMsg = require('../../mock/text-msg.js')
 const controller = require('../../../routers/webhook/controller')
 
-jest.mock('../../../model/cost', () => (
-  {
-    create: function () {
-      return Promise.resolve()
-    }
+jest.mock('../../../model/costs', () => {
+  return {
+    create: function(){return}
   }
-))
+})
 
 describe('controller', () => {
   beforeEach(() => {
