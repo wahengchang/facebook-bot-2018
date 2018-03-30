@@ -98,6 +98,9 @@ body{
       var name = response.name
       var id = response.id
       var email = response.email
+
+      console.log('response: ', response)
+
       document.getElementById('status').innerHTML =
         'Hola ' + name + '!';
         FB.api('/1701611166801933?fields=access_token', function (response) {
@@ -107,7 +110,7 @@ body{
           if(response.access_token){
             document.cookie = 'fbAccessToken='+response.access_token;
             // window.location.replace(`/login/redirect?name=${name}&email=${email}&id=${id}`);
-            window.location.replace(`/static/privacypolicy.htm`);
+            // window.location.replace(`/static/privacypolicy.htm`);
           }
         });
     });

@@ -1,23 +1,13 @@
-export default ({titleList, children}) => {
+export default ({titleList, children, clickHandler}) => {
     return (< div className = "rTable" > 
                 <div className="rTableRow">
                     {
                         titleList.map((item, index)=> (
-                            <div className="rTableHead" key={index}>
+                            <div className="rTableHead" key={index} onClick={clickHandler}>
                                 <strong>{item}</strong>
                             </div>
                         ))
                     }
-                    
-                    <div className="rTableHead">
-                        <span >Category</span>
-                    </div>
-                    <div className="rTableHead">
-                        <span >User</span>
-                    </div>
-                    <div className="rTableHead">
-                        <span >CreatedAt</span>
-                    </div>
                 </div>
                 {children}
                 <style jsx>{`

@@ -58,6 +58,35 @@ describe('cost object', ()=>{
                 done()
             })
         })
+
+        it('greaterThan', (done)=>{
+            const field = 'createdAt'
+            const _date = new Date('2018 3 10')
+            const greaterThan = {
+                field ,
+                val: _date
+            }
+            cost.list({greaterThan}).then((list)=>{
+                list.forEach(item => {
+                    expect(item[field] - _date).toBeGreaterThan(0)
+                });
+                done()
+            })
+        })
+        it('lessThan', (done)=>{
+            const field = 'createdAt'
+            const _date = new Date('2018 3 25')
+            const lessThan = {
+                field ,
+                val: _date
+            }
+            cost.list({lessThan}).then((list)=>{
+                list.forEach(item => {
+                    expect(item[field] - _date).toBeLessThan(0)
+                });
+                done()
+            })
+        })
     })
 
     it('remove()', (done)=>{
